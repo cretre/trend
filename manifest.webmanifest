@@ -1,0 +1,12 @@
+{
+  "name": "trend.com",
+  "short_name": "trend.com",
+  "description": "지금 뜨는 사회·문화·소비 트렌드 레이더",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#10131d",
+  "theme_color": "#10131d",
+  "icons": [
+    { "src": "./trend.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}
