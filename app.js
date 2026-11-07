@@ -1,4 +1,4 @@
-const API_BASE="https://macro.mcraft-tiger-574.workers.dev";
+const API_BASE="https://trend.treafuns.workers.dev";
 const CATS={all:"전체 트렌드",viral:"핫이슈·바이럴",food:"먹거리·핫플",shopping:"인기 상품·오픈런",fashion:"패션·뷰티",digital:"SNS·디지털 문화",slang:"신조어·밈",lifestyle:"라이프스타일"};
 const AGE={viral:["10s","20s","30s"],food:["20s","30s","40s"],shopping:["20s","30s","40s"],fashion:["10s","20s","30s"],digital:["10s","20s"],slang:["10s","20s"],lifestyle:["30s","40s","50s"]};
 const AGE_LABEL={"10s":"10대","20s":"20대","30s":"30대","40s":"40대","50s":"50대+"};
