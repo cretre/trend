@@ -16,3 +16,5 @@
 /* Analysis period selector and admin collection actions */
 .period-tabs{display:flex;gap:7px;margin:0 0 14px;flex-wrap:wrap}.period{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:7px 15px;font:inherit;font-size:11px;cursor:pointer}.period.active{background:rgba(155,130,255,.18);border-color:var(--violet);color:var(--text)}
 .admin-tools{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:18px 0 8px}.admin-refresh{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:inherit;border-radius:999px;padding:9px 15px;font:inherit;font-size:12px;letter-spacing:.02em;cursor:pointer;opacity:.85}.admin-refresh:hover{opacity:1;border-color:rgba(180,150,255,.7)}.admin-refresh:disabled{opacity:.45;cursor:wait}
+
+.collection-status{margin:22px auto 0;padding:12px 16px;max-width:1120px;border:1px solid var(--line,#303747);border-radius:12px;text-align:center;font-size:12px;color:var(--muted,#9aa4b5);background:rgba(120,140,180,.06)}

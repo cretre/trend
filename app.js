@@ -28,31 +28,7 @@ document.querySelectorAll(".age").forEach(b=>b.addEventListener("click",()=>{doc
 $("more").addEventListener("click",()=>{shown+=12;render()});$("refresh").addEventListener("click",load);$("theme").addEventListener("click",()=>document.body.classList.toggle("light"));load();
 
 
-// Admin data collection controls: secrets are entered at runtime, never stored in site files.
-async function runAdminRefresh(days, button, label) {
-  const token = window.prompt("관리자 인증 토큰(ADMIN_TOKEN)을 입력하세요.\n토큰은 저장되지 않습니다.");
-  if (token === null) return;
-  if (!token.trim()) { alert("관리자 토큰을 입력해야 합니다."); return; }
-  button.disabled = true;
-  const oldText = button.textContent;
-  button.textContent = "⏳ 수집 중…";
-  try {
-    const response = await fetch(API_BASE + "/api/refresh?days=" + days, {
-      method: "POST",
-      headers: { "Authorization": "Bearer " + token.trim(), "Content-Type": "application/json" }
-    });
-    const result = await response.json().catch(() => ({}));
-    if (response.status === 401) throw new Error("인증 실패: ADMIN_TOKEN을 확인하세요.");
-    if (!response.ok) throw new Error(result.error || ("요청 실패 (" + response.status + ")"));
-    const failed = (result.diagnostics || []).filter(x => !x.ok).map(x => x.feed).join(", ");
-    alert(label + " 완료\n신규 저장: " + (result.articles ?? 0) + "건\n중복 제외: " + (result.duplicates ?? 0) + "건\n수집 성공 카테고리: " + (result.successfulFeeds ?? 0) + "/" + (result.feeds ?? 7) + (failed ? "\n수집 확인 필요: " + failed : ""));
-    await load();
-  } catch (error) {
-    alert("데이터 수집 실패\n" + (error.message || error));
-  } finally {
-    button.disabled = false;
-    button.textContent = oldText;
-  }
-}
-$("adminInitial").addEventListener("click", () => runAdminRefresh(365, $("adminInitial"), "최근 1년 최초 수집"));
-$("adminRefresh").addEventListener("click", () => runAdminRefresh(7, $("adminRefresh"), "최근 7일 갱신"));
+
+// Collector status is informational; collection runs automatically through the Worker Cron Trigger.
+async function loadCollectionStatus(){try{const r=await fetch(API_BASE+"/api/status");if(!r.ok)return;const s=await r.json();const el=$("collectionStatus");if(!el)return;el.textContent=s.initial365Complete?"자동 수집 활성화 · 최근 7일 데이터 30분마다 갱신":"초기 1년 데이터 자동 구축 중 · "+s.initial365Cursor+"/"+s.categories.length+"개 카테고리 처리";}catch(e){}}
+loadCollectionStatus();
