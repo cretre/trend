@@ -24,3 +24,30 @@ async function load(){ $("feed").innerHTML='<div class="loading">최신 트렌�
 document.querySelectorAll(".cat").forEach(b=>b.addEventListener("click",()=>{document.querySelector(".cat.active")?.classList.remove("active");b.classList.add("active");cat=b.dataset.cat;shown=12;render()}));
 document.querySelectorAll(".age").forEach(b=>b.addEventListener("click",()=>{document.querySelector(".age.active")?.classList.remove("active");b.classList.add("active");age=b.dataset.age;shown=12;render()}));
 $("more").addEventListener("click",()=>{shown+=12;render()});$("refresh").addEventListener("click",load);$("theme").addEventListener("click",()=>document.body.classList.toggle("light"));load();
+
+
+// Admin refresh: the secret is entered by the administrator at runtime and is never embedded in site files.
+$("adminRefresh").addEventListener("click", async () => {
+  const token = window.prompt("관리자 인증 토큰(ADMIN_TOKEN)을 입력하세요.\n토큰은 저장되지 않습니다.");
+  if (token === null) return;
+  if (!token.trim()) { alert("관리자 토큰을 입력해야 합니다."); return; }
+  const button = $("adminRefresh");
+  button.disabled = true;
+  button.textContent = "⏳ 데이터 수집 중…";
+  try {
+    const response = await fetch(API_BASE + "/api/refresh", {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + token.trim(), "Content-Type": "application/json" }
+    });
+    const result = await response.json().catch(() => ({}));
+    if (response.status === 401) throw new Error("인증 실패: ADMIN_TOKEN을 확인하세요.");
+    if (!response.ok) throw new Error(result.error || ("요청 실패 (" + response.status + ")"));
+    alert("데이터 갱신 완료\n신규 저장: " + (result.articles ?? 0) + "건\n중복 제외: " + (result.duplicates ?? 0) + "건");
+    await load();
+  } catch (error) {
+    alert("데이터 갱신 실패\n" + (error.message || error));
+  } finally {
+    button.disabled = false;
+    button.textContent = "🔒 관리자 데이터 갱신";
+  }
+});

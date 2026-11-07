@@ -6,3 +6,9 @@
 .light .rank-card,.light .life-card,.light .gen-card{background:#fff}.light .life-list span{background:#f4f5f8;color:#30394b}.light .gen-row>div span{color:#566176}
 @media(max-width:760px){.lifecycle-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.generation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gen-card:last-child{grid-column:span 2}}
 @media(max-width:480px){.ranking-grid{grid-template-columns:1fr}.rank-card{padding:11px 12px}.life-card{padding:12px;min-height:145px}.gen-card{padding:12px}.section-title>span{max-width:105px;text-align:right;line-height:1.4}}
+
+/* Admin-only refresh control */
+.admin-tools{display:flex;justify-content:center;margin:18px 0 8px}
+.admin-refresh{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:inherit;border-radius:999px;padding:9px 15px;font:inherit;font-size:12px;letter-spacing:.02em;cursor:pointer;opacity:.78}
+.admin-refresh:hover{opacity:1;border-color:rgba(180,150,255,.7)}
+.admin-refresh:disabled{opacity:.45;cursor:wait}
